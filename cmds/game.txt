@@ -1,0 +1,50 @@
+scp -o StrictHostKeyChecking=no ./baseq3/* alex@128.36.229.97:/home/alex/quake3_custom/baseq3
+scp -o StrictHostKeyChecking=no ./missionpack/* alex@128.36.229.97:/home/alex/quake3_custom/missionpack
+
+"C:\Program Files\TurboVNC\putty" alex@128.36.229.61
+/opt/TurboVNC/bin/vncserver
+/opt/VirtualGL/bin/vglrun /home/alex/quake3_custom/ioquake3.x86_64 +set r_fullscreen 1 +set cg_drawFPS 1 +set developer 1 +set vm_ui 0 +set vm_cgame 0 +set vm_game +set sv_pure 0
+
+128.36.229.97
+128.36.229.61
+128.36.229.65
+128.36.229.67
+128.36.229.1
+130.132.1.9
+130.132.1.10
+130.132.1.11
+
+
+lxc-create -f lxcC1.conf -n C1
+lxc-execute -n C1 /opt/TurboVNC/bin/vncserver
+
+sudo ifconfig eth0 128.36.229.65 netmask 255.255.255.0 up
+sudo route add default gw 128.36.229.1 eth0
+
+sudo lxc-execute -n C1 /opt/TurboVNC/bin/vncserver 
+
+
+lxc-create -t ubuntu -n C1
+lxc-start -n C1 /sbin/init
+lxc-execute -n C1 /bin/bash
+ifconfig eth0 128.36.229.65 netmask 255.255.255.0 up
+route add default gw 128.36.229.1 eth0 
+lxc-stop -n C1
+add to /var/lib/lxc/C1/fstab
+/opt /var/lib/lxc/C1/rootfs/opt none bind
+/usr/lib/lxc /var/lib/lxc/C1/rootfs/usr/lib/lxc none bind
+/etc /var/lib/lxc/C1/rootfs/etc none bind
+
+lxc-execute -n C1 /opt/TurboVNC/bin/vncserver
+
+
+lxc-start -n C1
+lxc-stop -n C1
+lxc-destroy -n C1
+
+lxc-create -n C1
+
+
+sudo tc qdisc change dev eth1 root netem delay 50ms 10ms 25%
+sudo tc qdisc change dev eth1 root netem delay 100ms 10ms 25%
+sudo tc qdisc change dev eth1 root netem delay 400ms 10ms 25%

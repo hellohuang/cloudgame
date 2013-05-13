@@ -1,0 +1,51 @@
+General
+http://www.cloudtweaks.com/2011/03/gaming-on-the-cloud-cloud-gaming-123/
+http://en.wikipedia.org/wiki/Cloud_gaming
+http://www.theverge.com/2012/5/16/3023502/ubitus-cloud-gaming-service-gtc-2012
+http://www.cnblogs.com/coderzh/archive/2010/09/11/thincilent.html
+http://www.cnblogs.com/coderzh/archive/2010/09/24/thinclient-protocol.html
+http://www.cnblogs.com/coderzh/archive/2010/10/07/thinclient-secret-of-nomachine.html
+http://v.youku.com/v_show/id_XMTgyMzYzNjI4.html
+
+x window system
+http://www.xfree86.org/4.0/DESIGN.html
+http://www.x.org/releases/X11R7.5/doc/core/Xserver-spec.html
+
+Virtual GPU
+Graphics shocker: Nvidia virtualizes Kepler GPUs
+http://www.theregister.co.uk/2012/05/16/nvidia_vgx_gpu_virtualization/
+Citrix and NVIDIA team up on GPU hardware virtualization
+http://blogs.citrix.com/2012/05/15/citrix-and-nvidia-team-up-on-gpu-hardware-virtualization/
+Lucid's VGware software 
+http://www.lucidlogix.com/technology-cloud.html
+Zillians vGPU 
+http://gpgpu.org/2011/11/18/zillians-vgpu
+
+RemoteFX
+http://technet.microsoft.com/library/ff817578.aspx
+http://technet.microsoft.com/en-us/library/ff817602(WS.10).aspx
+http://technet.microsoft.com/en-us/video/windows-server-2012-remote-desktop-services-with-remotefx-more-than-a-word.aspx
+
+http://technet.microsoft.com/en-us/library/ee405267(WS.10).aspx
+http://blogs.msdn.com/b/rds/archive/2010/07/13/beta-testing-microsoft-remotefx-in-service-pack-1.aspx
+http://blogs.msdn.com/b/rds/archive/2010/07/08/more-partner-momentum-around-microsoft-remotefx-in-windows-server-2008-r2-sp1-beta.aspx
+
+http://technet.microsoft.com/en-us/library/ff817586(v=ws.10)
+
+RDP protocol
+http://msdn.microsoft.com/en-us/library/cc240445(v=prot.10)
+http://msdn.microsoft.com/en-us/library/ff635395(v=prot.10)
+http://msdn.microsoft.com/en-us/library/hh554846(v=prot.10)
+http://msdn.microsoft.com/en-us/library/hh881071(v=prot.10)
+http://msdn.microsoft.com/en-us/library/hh554658(v=prot.10)
+http://msdn.microsoft.com/en-us/library/ff635378(v=prot.10)
+
+DirectX and OpenGL interception
+http://graphics.stanford.edu/~mdfisher/D3D9Interceptor.html
+http://code.google.com/p/glintercept/
+
+Game
+http://www.john-morales.com/howto/how-to-update-and-build-quake3/
+
+
+

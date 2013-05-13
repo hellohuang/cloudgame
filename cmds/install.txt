@@ -1,0 +1,139 @@
+Game
+http://www.john-morales.com/howto/how-to-update-and-build-quake3/
+
+
+*Fedora 17
+Replace the default nouvee driver with real nvidia driver.
+http://forums.fedoraforum.org/showthread.php?t=204752
+
+yum grouplist 
+yum groupinstall "Development Tools"
+yum groupinstall "X Software Development"
+yum install cmake
+
+systemctl enable sshd-service
+systemctl start sshd-service
+
+Fireall, open 5801+, 5901+, 6001+
+
+*libjpegturbo 1.2.1
+./configure --with-pic .
+
+*turbovnc 1.1
+directly make xserver
+modify the Makefile xserver-install to add mkdir for two folders
+then make xserver-install
+note that the vncpasswd should also be copied to vncserver dir.
+
+VGL-2.3.1
+add /etc/ld.so.conf.d/vgl.conf:
+http://www.cyberciti.biz/faq/linux-setting-changing-library-path/
+
+Windows vnc
+use 32 bit cmake
+cmake -G "Visual Studio 10 Win64" -DTJPEG_INCLUDE_DIR=D:\\projects\\Remote3D\\libjpeg-turbo64\\include -DTJPEG_LIBRARY=D:\\projects\\Remote3D\\libjpeg-turbo64\\lib\\turbojpeg-static.lib
+The cmakelists.txt and the findturbojpeg.cmake file should be modified to include 64 bit and remove compile test
+
+UBUNTU===========================
+apt-cache search libxcursor
+sudo apt-get update
+sudo apt-get upgrade
+
+ioquake3
+sudo apt-get install openssh-server
+sudo apt-get install build-essential subversion libsdl1.2-dev libopenal-dev
+maybe ioquake3-q3a-1.32-9.run and ioquake3-1.36-7.1.x86_64.run,
+in /usr/local/games/ioquake3
+=== 
+http://ioquake3.org/get-it/source-codes/
+in /home/alex, mkdir quake3_custom
+/home/alex/quake3_custom, mkdir baseq3, mkdir missionpack
+svn co svn://svn.icculus.org/quake3/trunk ioquake3
+cd ioquake3/
+make
+COPYDIR=/home/alex/quake3_custom make copyfiles
+
+tian@p4p-5, /home/tian/temp,
+scp -o UserKnownHostsFile=/dev/null StrictHostKeyChecking=no ./baseoa/* alex@128.36.229.61:/home/alex/quake3_custom/baseq3
+scp -o UserKnownHostsFile=/dev/null StrictHostKeyChecking=no ./missionpack/* alex@128.36.229.61:/home/alex/quake3_custom/missionpack
+
+==== 
+
+libjpegturbo
+sudo apt-get install nasm autoconf libtool
+sh ./configure --with-pic
+libjpeg-turbo-1.2.1/simd/nasm_lt.sh should chmod+x
+make
+sudo make install @ /opt/libjpeg-turbo/include and /opt/libjpeg-turbo/lib
+
+virtualgl
+sudo apt-get install cmake libX11-dev libXext-dev  libgl1-mesa-dev libGLU-dev mesa-utils
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+make
+sudo make install @  /opt/VirtualGL
+
+configure virtualgl
+Ctrl-Alt-F1 
+sudo service lightdm stop
+sudo /opt/VirtualGL/bin/vglserver_config
+sudo service lightdm start
+/opt/VirtualGL/bin/glxinfo -display :0 -c
+
+sudo vi /etc/ld.so.conf.d/vgl.conf: /opt/VirtualGL/lib
+sudo ldconfig
+http://www.cyberciti.biz/faq/linux-setting-changing-library-path/
+
+turbovnc
+sudo apt-get install libpam0g-dev libxfont-dev libxcursor-dev libX11-dev libXaw7-dev libXt-dev
+sh ./configure
+make xserver
+sudo mkdir /opt/TurboVNC/
+sudo mkdir /opt/TurboVNC/bin/
+sudo mkdir /opt/TurboVNC/man/
+sudo mkdir /opt/TurboVNC/man/man1
+sudo make xserver-install
+sudo cp ./vncpasswd/vncpasswd /opt/TurboVNC/bin/
+
+configure ~/.vnc/xstartup.turbovnc:
+http://sourceforge.net/projects/virtualgl/forums/forum/401860/topic/5425279
+
+lxc 
+https://help.ubuntu.com/12.04/serverguide/lxc.html
+container networking
+http://www.vislab.uq.edu.au/howto/lxc/lxcnetwork.html
+http://manpages.ubuntu.com/manpages/lucid/man5/lxc.conf.5.html
+
+sudo /sbin/brctl setfd lxcbr0 0
+sudo /sbin/ifconfig lxcbr0 128.36.229.61 netmask 255.255.255.0 promisc up
+sudo /sbin/brctl addif lxcbr0 eth1
+sudo /sbin/ifconfig eth1 0.0.0.0 up 
+sudo /sbin/route add default gw 128.36.229.1 lxcbr0
+
+start lxc
+http://www.stgraber.org/2012/05/04/lxc-in-ubuntu-12-04-lts/
+https://help.ubuntu.com/12.04/serverguide/lxc.html
+
+enable root user to login
+https://answers.launchpad.net/ubuntu/+source/lightdm/+question/206698
+sudo passwd root
+sudo su
+
+config file, the network currently cannot config gateway, which is annoying
+lxc.network.type=veth
+lxc.network.link=lxcbr0
+lxc.network.flags=up
+lxc.network.ipv4=128.36.229.65
+lxc.network.hwaddr =aa:bb:cc:dd:ee:f1
+
+login root mode
+lxc-create -f lxcC1.conf -n C1
+lxc-execute -n C1 /opt/TurboVNC/bin/vncserver
+still need to change the xstartup.turbovnc file
+
+vnstat
+http://humanlanguage.wordpress.com/2009/01/12/install-bandwidth-monitor-vnstat-on-ubuntu/
+
+vgl mode
+/opt/VirtualGL/bin/vglconnect root@128.36.229.61
+export VGL_LOGO=1
+/opt/VirtualGL/bin/vglrun -d 130.132.249.141:0.0 -c rgb /home/alex/quake3_custom/ioquake3.x86_64 +set cg_drawFPS 1
